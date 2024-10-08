@@ -18,6 +18,10 @@ async function startApp() {
 }
 startApp();
 
+app.get("",(req,res) => {
+  return res.status(403).json("Puff dough rank bot! By M1SSING");
+}
+
 app.get("/ranker", (req, res) => {
   var User = req.param("userid");
   var Rank = req.param("rank");
