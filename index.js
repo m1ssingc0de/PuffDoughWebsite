@@ -23,9 +23,9 @@ app.get("", (req,res) => {
 });
 
 app.get("/ranker", (req, res) => {
-  var User = req.param("userid");
-  var Rank = req.param("rank");
-  var Passkey = req.param("passkey");
+  var User = req.params.userid;
+  var Rank = req.params.rank;
+  var Passkey = req.params.passkey;
 
   if (Passkey !== process.env.PASSKEY) {
     return res.status(403).json("Invalid passkey!");
