@@ -19,7 +19,6 @@ async function startApp() {
 }
 startApp();
 
-<<<<<<< HEAD
 app.get("/", (req,res) => {
   res.sendFile(path.join(__dirname,'views','index.html'));
 });
@@ -35,17 +34,7 @@ app.get("/v1/rank", (req, res) => {
      errorcode:"one or more arguments missing"
   });
   }
-
-app.get("", (req,res) => {
-  res.json("Rank Bot! - By Missing");
-});
-
-app.get("/ranker", (req, res) => {
-  var User = req.params.userid;
-  var Rank = req.params.rank;
-  var Passkey = req.params.passkey;
->>>>>>> 8c56488695452e1d6c9e37543e09e7c833e3da68
-
+  
   if (Passkey !== process.env.PASSKEY) {
     return res.status(403).json({
       success:false,
