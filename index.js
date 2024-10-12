@@ -54,7 +54,7 @@ app.get("/v1/rank", (req, res) => {
     });
   }
 
-  console.log("Ranking" + userId + "to" + rankId);
+  console.log("Ranking " + userId + " to " + rankId);
 
   // Attempt to set the rank using noblox.js
   rbx.setRank(groupId, userId, rankId)
