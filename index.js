@@ -41,6 +41,8 @@ app.get("/v1/rank", (req, res) => {
       errorcode:"incorrect passkey"
     });
   }
+  console.log(User)
+
   rbx.setRank(groupId, parseInt(User), parseInt(Rank))
   return res.json({
     success:true,
