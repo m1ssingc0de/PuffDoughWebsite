@@ -14,8 +14,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 async function startApp() {
   await rbx.setCookie(cookie);
-  let currentUser = await rbx.getCurrentUser();
-  console.log(currentUser.UserName);
 }
 startApp();
 
@@ -56,7 +54,7 @@ app.get("/v1/rank", (req, res) => {
     });
   }
 
-  console.log(userId);
+  console.log("Ranking" + userId + "to" + rankId);
 
   // Attempt to set the rank using noblox.js
   rbx.setRank(groupId, userId, rankId)
