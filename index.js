@@ -28,26 +28,53 @@ app.get("/v1/rank", (req, res) => {
   var Rank = req.headers.rank;
   var Passkey = req.headers.authorization;
 
-  if (Passkey == null || Rank == null || User == null) {
+  // Check for missing arguments
+  if (!Passkey || !Rank || !User) {
     return res.status(403).json({
-     success:false,
-     errorcode:"one or more arguments missing"
-  });
-  }
-  
-  if (Passkey !== process.env.PASSKEY) {
-    return res.status(403).json({
-      success:false,
-      errorcode:"incorrect passkey"
+      success: false,
+      errorcode: "one or more arguments missing",
     });
   }
-  console.log(User)
 
-  rbx.setRank(groupId, parseInt(User), parseInt(Rank))
-  return res.json({
-    success:true,
-  });
+  // Check if passkey is correct
+  if (Passkey !== process.env.PASSKEY) {
+    return res.status(403).json({
+      success: false,
+      errorcode: "incorrect passkey",
+    });
+  }
+
+  // Convert User and Rank to numbers (if not already)
+  const userId = parseInt(User);
+  const rankId = parseInt(Rank);
+
+  // Validate if User and Rank are valid numbers
+  if (isNaN(userId) || isNaN(rankId)) {
+    return res.status(400).json({
+      success: false,
+      errorcode: "userid or rank is not a valid number",
+    });
+  }
+
+  console.log(userId);
+
+  // Attempt to set the rank using noblox.js
+  rbx.setRank(groupId, userId, rankId)
+    .then(() => {
+      return res.json({
+        success: true,
+      });
+    })
+    .catch((err) => {
+      console.error(err);
+      return res.status(500).json({
+        success: false,
+        errorcode: "failed to set rank",
+        message: err.message,
+      });
+    });
 });
+
 
 app.get("/v1*", (req, res) => {
   return res.status(404).json("No webpage found")
